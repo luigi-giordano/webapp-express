@@ -9,6 +9,13 @@ const index = (req, res) => {
   })
 }
 
+const show = (req, res) => {
+
+  const id = req.params.id
+  res.send(`Dettagli Film con id ${id}`)
+}
+
 module.exports = {
-  index
+  index,
+  show
 }

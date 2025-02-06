@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-
+require('dotenv').config()
 const port = process.env.PORT || 3000
 
 //import middleware
@@ -8,7 +8,7 @@ const errorsHandler = require('./middlewares/errorsHandler')
 const notFound = require('./middlewares/notFound')
 
 //import router
-const moviesRouter = require('./routes/movies')
+const movieRouter = require('./routes/movies')
 
 
 //middleware assets static
@@ -23,7 +23,7 @@ app.get('/', (req, res) => {
 })
 
 //rotta movies
-app.use('/movies', movieRouter)
+app.use('/api/movies', movieRouter)
 
 //middleware errore
 app.use(errorsHandler)
