@@ -1,7 +1,8 @@
 const express = require('express')
 const app = express()
+require('dotenv').config()
 
-const port = 3000
+const port = process.env.PORT || 3000
 
 //import middleware
 const errorsHandler = require('./middlewares/errorsHandler')
@@ -9,6 +10,7 @@ const notFound = require('./middlewares/notFound')
 
 //import router
 const movieRouter = require('./routes/movies')
+const { REFUSED } = require('dns')
 
 //middleware assets static
 app.use(express.static('public'))
@@ -34,18 +36,3 @@ app.use(notFound)
 app.listen(port, () => {
   console.log(`Sono in ascolto alla porta ${port}`)
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
