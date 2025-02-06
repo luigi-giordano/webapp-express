@@ -6,16 +6,19 @@ const port = process.env.PORT || 3000
 //import middleware
 const errorsHandler = require('./middlewares/errorsHandler')
 const notFound = require('./middlewares/notFound')
+const imageAbsolute = require('./middlewares/imageAbsolute')
 
 //import router
 const movieRouter = require('./routes/movies')
 
+//middleware parsing body
+app.use(express.json())
 
 //middleware assets static
 app.use(express.static('public'))
 
-//middleware parsing body
-app.use(express.json())
+//middleware immagini
+app.use(imageAbsolute)
 
 //rotte principale
 app.get('/', (req, res) => {
