@@ -1,6 +1,5 @@
 const express = require('express')
 const app = express()
-require('dotenv').config()
 
 const port = process.env.PORT || 3000
 
@@ -9,8 +8,8 @@ const errorsHandler = require('./middlewares/errorsHandler')
 const notFound = require('./middlewares/notFound')
 
 //import router
-const movieRouter = require('./routes/movies')
-const { REFUSED } = require('dns')
+const moviesRouter = require('./routes/movies')
+
 
 //middleware assets static
 app.use(express.static('public'))
