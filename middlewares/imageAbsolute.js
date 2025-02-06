@@ -1,5 +1,6 @@
 const setImagePath = (req, res, next) => {
-  req.imagepath = `${req.protocol}://${req.get('host')}/img/movies_cover`
+  console.log('passato per setImagePath')
+  req.imagePath = `${req.protocol}://${req.get('host')}/img/movies_cover`;
   next()
 }
 
