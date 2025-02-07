@@ -16,7 +16,7 @@ const movieRouter = require('./routes/movies')
 
 
 //middleware cors
-app.use(corsCustom)
+app.use(cors({ origin: 'http://localhost:5173' }))
 
 
 //middleware parsing body
