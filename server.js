@@ -1,15 +1,23 @@
 const express = require('express')
 const app = express()
+const cors = require('cors')
 require('dotenv').config()
 const port = process.env.PORT || 3000
+
 
 //import middleware
 const errorsHandler = require('./middlewares/errorsHandler')
 const notFound = require('./middlewares/notFound')
 const imageAbsolute = require('./middlewares/imageAbsolute')
+const corsCustom = require('./middlewares/corsCustom')
 
 //import router
 const movieRouter = require('./routes/movies')
+
+
+//middleware cors
+app.use(corsCustom)
+
 
 //middleware parsing body
 app.use(express.json())
