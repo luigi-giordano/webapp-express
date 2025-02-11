@@ -5,8 +5,6 @@ const index = (req, res) => {
 
   connection.query(sql, (err, results) => {
     if (err) return res.status(500).json({ error: 'Query al database fallita' })
-    console.log(req.imagePath);
-
 
     const movies = results.map(movie => {
       return {
@@ -27,7 +25,7 @@ const show = (req, res) => {
 
   connection.query(sql, [id], (err, results) => {
     if (err) return res.status(500).json({ error: 'Query al database film fallita' })
-    if (results.lenght === 0 || results[0].id === null) return res.status(404).json({ error: 'Post non trovato' })
+    if (results.length === 0 || results[0].id === null) return res.status(404).json({ error: 'Post non trovato' })
 
 
     connection.query(sqlReview, [id], (err, resultsReviews) => {
@@ -44,7 +42,7 @@ const show = (req, res) => {
   })
 }
 
-const store = (req, res) => {
+const storeReviews = (req, res) => {
   const id = req.params.id
   const { name, vote, text } = req.body
   const sql = 'INSERT INTO reviews(name, vote, text, movie_id) VALUES (?, ?, ?, ?)'
@@ -52,14 +50,20 @@ const store = (req, res) => {
   connection.query(sql, [name, vote, text, id], (err, results) => {
     if (err) return res.status(500).json({ error: 'Query al database film fallita' })
     res.status(201)
-    console.log(results);
 
     res.json({ message: 'Recensione Aggiunta', id: results.insertId })
   })
 }
 
+const store = (req, res) => {
+  console.log(req);
+
+  res.json({ message: 'Aggiungo nuovo film' })
+}
+
 module.exports = {
   index,
   show,
+  storeReviews,
   store
 }

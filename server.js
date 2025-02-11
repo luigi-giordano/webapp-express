@@ -9,15 +9,12 @@ const port = process.env.PORT || 3000
 const errorsHandler = require('./middlewares/errorsHandler')
 const notFound = require('./middlewares/notFound')
 const imageAbsolute = require('./middlewares/imageAbsolute')
-const corsCustom = require('./middlewares/corsCustom')
 
 //import router
 const movieRouter = require('./routes/movies')
 
-
 //middleware cors
 app.use(cors({ origin: 'http://localhost:5173' }))
-
 
 //middleware parsing body
 app.use(express.json())
