@@ -56,9 +56,21 @@ const storeReviews = (req, res) => {
 }
 
 const store = (req, res) => {
-  console.log(req);
+  console.log(req.file);
+  const { title, director, abstract } = req.body
+  const imageName = req.file.filename
 
-  res.json({ message: 'Aggiungo nuovo film' })
+  const sql = 'INSERT INTO movies (title, director, abstract, image) VALUES(?, ?, ?, ?)'
+  connection.query(
+    sql,
+    [title, director, abstract, imageName],
+    (err, results) => {
+      console.log(err);
+
+      if (err) return res.status(500).json({ error: 'Query al database film fallita' })
+      res.status(201).json({ status: 'success', message: 'Film aggiunto con successo' })
+    }
+  )
 }
 
 module.exports = {

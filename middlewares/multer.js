@@ -4,6 +4,7 @@ const multer = require('multer')
 const storage = multer.diskStorage({
   destination: "./public/img/movies_cover",
   filename: (req, file, cb) => {
+
     //nome univoco per il file
     const uniqueName = `${Date.now()}-${file.originalname}`
     cb(null, uniqueName)
