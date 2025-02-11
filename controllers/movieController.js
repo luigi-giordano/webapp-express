@@ -7,11 +7,14 @@ const index = (req, res) => {
     if (err) return res.status(500).json({ error: 'Query al database fallita' })
 
     const movies = results.map(movie => {
+      const imagePath = req.imagePath + movie.image;
+      console.log(imagePath);
       return {
         ...movie,
-        image: req.imagePath + movie.image
-      }
-    })
+        image: imagePath
+      };
+    });
+
     res.json(movies);
   })
 }
