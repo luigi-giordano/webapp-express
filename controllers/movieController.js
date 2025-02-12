@@ -1,4 +1,6 @@
 const connection = require('../data/db')
+const path = require('path')
+const fs = require('fs')
 
 const index = (req, res) => {
   const sql = 'SELECT * FROM movies';
@@ -78,11 +80,24 @@ const store = (req, res) => {
 
 const destroy = (req, res) => {
   const id = req.params.id
-  const sqlDelete = 'DELETE FROM movies WHERE id = ?'
 
-  connection.query(sqlDelete, [id], (err, results) => {
-    if (err) return res.status(500).json({ error: 'Query al database film fallita' })
-    res.json({ message: 'Film eliminato con successo' })
+  const sqlDelete = 'DELETE FROM movies WHERE id = ?'
+  const sqlSelect = 'SELECT image FROM movies WHERE id = ?'
+
+
+  connection.query(sqlSelect, [id], (err, results) => {
+    const imageName = results[0].image
+    const imagePath = path.join(__dirname, '../public/img/movies_cover', imageName)
+
+    fs.unlink(imagePath, (err) => {
+      if (err) console.log(err);
+    })
+
+    connection.query(sqlDelete, [id], (err, results) => {
+      if (err) return res.status(500).json({ error: 'Query al database film fallita' })
+      res.json({ message: 'Film eliminato con successo' })
+    })
+
   })
 }
 
