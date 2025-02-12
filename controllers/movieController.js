@@ -8,7 +8,7 @@ const index = (req, res) => {
 
     const movies = results.map(movie => {
       const imagePath = req.imagePath + movie.image;
-      console.log(imagePath);
+      // console.log(imagePath);
       return {
         ...movie,
         image: imagePath
@@ -59,7 +59,7 @@ const storeReviews = (req, res) => {
 }
 
 const store = (req, res) => {
-  console.log(req.file);
+  // console.log(req.file);
   const { title, director, abstract } = req.body
   const imageName = req.file.filename
 
@@ -68,7 +68,7 @@ const store = (req, res) => {
     sql,
     [title, director, abstract, imageName],
     (err, results) => {
-      console.log(err);
+      // console.log(err);
 
       if (err) return res.status(500).json({ error: 'Query al database film fallita' })
       res.status(201).json({ status: 'success', message: 'Film aggiunto con successo' })
@@ -76,9 +76,20 @@ const store = (req, res) => {
   )
 }
 
+const destroy = (req, res) => {
+  const id = req.params.id
+  const sqlDelete = 'DELETE FROM movies WHERE id = ?'
+
+  connection.query(sqlDelete, [id], (err, results) => {
+    if (err) return res.status(500).json({ error: 'Query al database film fallita' })
+    res.json({ message: 'Film eliminato con successo' })
+  })
+}
+
 module.exports = {
   index,
   show,
   storeReviews,
-  store
+  store,
+  destroy
 }
